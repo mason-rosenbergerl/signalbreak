@@ -1,0 +1,198 @@
+{
+  "samples": [
+    {
+      "path": "variant_a.exe",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "file_size": 182784,
+      "file_type": "PE",
+      "overall_entropy": 6.91,
+      "imports": [
+        "KERNEL32.dll:CreateProcessW",
+        "KERNEL32.dll:VirtualAlloc",
+        "WINHTTP.dll:WinHttpOpen"
+      ],
+      "capabilities": [
+        "memory-allocation",
+        "network-communication",
+        "powershell",
+        "process-execution"
+      ],
+      "iocs": [
+        "hxxps://beacon.example.test/update"
+      ],
+      "strings": [
+        "Mozilla/5.0",
+        "hxxps://beacon.example.test/update",
+        "powershell.exe -EncodedCommand",
+        "stage-one"
+      ],
+      "sections": [
+        {
+          "name": ".text",
+          "virtual_size": 45056,
+          "raw_size": 45568,
+          "entropy": 6.1,
+          "executable": true,
+          "writable": false
+        },
+        {
+          "name": ".rdata",
+          "virtual_size": 12288,
+          "raw_size": 12800,
+          "entropy": 5.2,
+          "executable": false,
+          "writable": false
+        }
+      ],
+      "yara_rules": [],
+      "yara_strings": [],
+      "metadata": {}
+    },
+    {
+      "path": "variant_b.exe",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "file_size": 188416,
+      "file_type": "PE",
+      "overall_entropy": 6.95,
+      "imports": [
+        "KERNEL32.dll:CreateProcessW",
+        "KERNEL32.dll:VirtualAlloc",
+        "WINHTTP.dll:WinHttpOpen"
+      ],
+      "capabilities": [
+        "memory-allocation",
+        "network-communication",
+        "powershell",
+        "process-execution"
+      ],
+      "iocs": [
+        "hxxps://cdn.example.test/payload"
+      ],
+      "strings": [
+        "User-Agent",
+        "hxxps://cdn.example.test/payload",
+        "powershell.exe -w hidden",
+        "stage-two"
+      ],
+      "sections": [
+        {
+          "name": ".text",
+          "virtual_size": 46080,
+          "raw_size": 46592,
+          "entropy": 6.2,
+          "executable": true,
+          "writable": false
+        },
+        {
+          "name": ".rdata",
+          "virtual_size": 12288,
+          "raw_size": 12800,
+          "entropy": 5.1,
+          "executable": false,
+          "writable": false
+        }
+      ],
+      "yara_rules": [],
+      "yara_strings": [],
+      "metadata": {}
+    },
+    {
+      "path": "variant_c.exe",
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "file_size": 191488,
+      "file_type": "PE",
+      "overall_entropy": 6.99,
+      "imports": [
+        "KERNEL32.dll:CreateProcessW",
+        "KERNEL32.dll:VirtualAlloc",
+        "WINHTTP.dll:WinHttpOpen"
+      ],
+      "capabilities": [
+        "encoded-content",
+        "memory-allocation",
+        "network-communication",
+        "powershell",
+        "process-execution"
+      ],
+      "iocs": [
+        "hxxps://sync.example.test/check"
+      ],
+      "strings": [
+        "FromBase64String",
+        "hxxps://sync.example.test/check",
+        "sync-token",
+        "v3"
+      ],
+      "sections": [
+        {
+          "name": ".text",
+          "virtual_size": 47104,
+          "raw_size": 47616,
+          "entropy": 6.25,
+          "executable": true,
+          "writable": false
+        },
+        {
+          "name": ".rdata",
+          "virtual_size": 12288,
+          "raw_size": 12800,
+          "entropy": 5.0,
+          "executable": false,
+          "writable": false
+        }
+      ],
+      "yara_rules": [],
+      "yara_strings": [],
+      "metadata": {}
+    }
+  ],
+  "lineages": [
+    {
+      "id": "L01",
+      "sample_count": 3,
+      "signal_persistence": 0.5733333333333334,
+      "anchors": [
+        "capabilities",
+        "imports",
+        "sections"
+      ],
+      "churn": [
+        "iocs",
+        "strings"
+      ],
+      "metrics": [
+        {
+          "category": "capabilities",
+          "stability": 0.8666666666666667,
+          "interpretation": "stable across the cluster"
+        },
+        {
+          "category": "imports",
+          "stability": 1.0,
+          "interpretation": "stable across the cluster"
+        },
+        {
+          "category": "sections",
+          "stability": 1.0,
+          "interpretation": "stable across the cluster"
+        },
+        {
+          "category": "iocs",
+          "stability": 0.0,
+          "interpretation": "high-churn evidence; weak as a family anchor"
+        },
+        {
+          "category": "strings",
+          "stability": 0.0,
+          "interpretation": "high-churn evidence; weak as a family anchor"
+        }
+      ],
+      "notes": [
+        "String evidence changes heavily; static string signatures are likely to age quickly across variants.",
+        "Import evidence is comparatively stable and can provide durable capability anchors.",
+        "Capability categories remain consistent across the lineage, suggesting behavior-level continuity.",
+        "The cluster is large enough to observe drift rather than treating one sample as representative."
+      ]
+    }
+  ]
+}

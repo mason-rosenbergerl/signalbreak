@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "signalbreak"
+version = "0.1.0"
+description = "Static detection-resilience analysis for related malware samples"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{name = "Mason Rosenberger"}]
+license = {text = "MIT"}
+dependencies = ["pefile>=2023.2.7", "rich>=13.7.0"]
+
+[project.optional-dependencies]
+yara = ["yara-python>=4.5.0"]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+signalbreak = "signalbreak.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["signalbreak*"]

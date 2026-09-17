@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>SignalBreak Detection Resilience Report</title>
+<style>
+:root { --bg:#081018; --panel:#0f1a25; --line:#203242; --text:#e7eef5; --muted:#91a2b3; --accent:#68d7c2; --warn:#f3b56a; }
+* { box-sizing:border-box } body { margin:0; background:radial-gradient(circle at top left,#122538 0,#081018 42%); color:var(--text); font:14px/1.5 Inter,ui-sans-serif,system-ui,sans-serif; }
+main { max-width:1200px; margin:0 auto; padding:48px 24px 80px; }
+.kicker,.eyebrow { color:var(--accent); text-transform:uppercase; letter-spacing:.14em; font-weight:700; font-size:11px; }
+h1 { font-size:44px; line-height:1.05; max-width:780px; margin:10px 0 12px; }
+.lede { color:var(--muted); max-width:820px; font-size:17px; }
+.stats { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:30px 0 44px; }
+.stat,.panel,.cluster { background:rgba(15,26,37,.86); border:1px solid var(--line); border-radius:16px; box-shadow:0 12px 45px rgba(0,0,0,.18); }
+.stat { padding:22px; } .stat b { display:block; font-size:30px; margin-top:4px; }
+.cluster { padding:22px; margin:22px 0; } .cluster-head { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; }
+h2 { margin:6px 0 18px; font-size:28px } h3 { margin:0 0 13px; font-size:15px } .sub { margin-top:22px; }
+.metric-pill { border:1px solid var(--line); border-radius:999px; padding:10px 14px; color:var(--muted); white-space:nowrap; } .metric-pill strong { color:var(--text); margin-left:6px; }
+.grid { display:grid; grid-template-columns:1.35fr .9fr; gap:14px; margin-bottom:14px; } .panel { padding:18px; }
+table { width:100%; border-collapse:collapse; } th,td { text-align:left; padding:11px 10px; border-bottom:1px solid var(--line); vertical-align:top; } th { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em; } code { color:var(--accent); }
+.chips { display:flex; flex-wrap:wrap; gap:7px; } .chips span { border:1px solid #2b6c63; border-radius:999px; padding:6px 9px; color:#b7f6eb; background:#0c2724; } .chips.warn span { border-color:#74562d; color:#ffd99f; background:#281d0d; } .muted { color:var(--muted)!important; border-color:var(--line)!important; background:transparent!important; } li { margin:8px 0; color:var(--muted); }
+.footer { color:var(--muted); font-size:12px; margin-top:30px; }
+@media(max-width:800px) { .stats,.grid { grid-template-columns:1fr; } .cluster-head { flex-direction:column; } h1 { font-size:36px; } }
+</style></head>
+<body><main>
+<div class='kicker'>Static detection engineering</div><h1>SignalBreak</h1>
+<p class='lede'>A static detection-resilience report: related samples are compared as a lineage so analysts can see which evidence survives variant drift—and which detection signals age out.</p>
+<div class='stats'><div class='stat'><span class='eyebrow'>Samples</span><b>3</b></div><div class='stat'><span class='eyebrow'>Lineages</span><b>1</b></div><div class='stat'><span class='eyebrow'>Avg. Signal Persistence Index</span><b>57%</b></div></div>
+
+            <section class='cluster'>
+              <div class='cluster-head'><div><span class='eyebrow'>LINEAGE L01</span><h2>3 related samples</h2></div><div class='metric-pill'>Signal Persistence Index <strong>57%</strong></div></div>
+              <div class='grid'>
+                <div class='panel'><h3>Evidence stability</h3><table><thead><tr><th>Evidence</th><th>Stability</th><th>Meaning</th></tr></thead><tbody><tr><td>capabilities</td><td><b>87%</b></td><td>stable across the cluster</td></tr><tr><td>imports</td><td><b>100%</b></td><td>stable across the cluster</td></tr><tr><td>sections</td><td><b>100%</b></td><td>stable across the cluster</td></tr><tr><td>iocs</td><td><b>0%</b></td><td>high-churn evidence; weak as a family anchor</td></tr><tr><td>strings</td><td><b>0%</b></td><td>high-churn evidence; weak as a family anchor</td></tr></tbody></table></div>
+                <div class='panel'><h3>What survives?</h3><div class='chips'><span>capabilities</span><span>imports</span><span>sections</span></div><h3 class='sub'>What churns?</h3><div class='chips warn'><span>iocs</span><span>strings</span></div><ul><li>String evidence changes heavily; static string signatures are likely to age quickly across variants.</li><li>Import evidence is comparatively stable and can provide durable capability anchors.</li><li>Capability categories remain consistent across the lineage, suggesting behavior-level continuity.</li><li>The cluster is large enough to observe drift rather than treating one sample as representative.</li></ul></div>
+              </div>
+              <div class='panel'><h3>Sample lineage</h3><table><thead><tr><th>File</th><th>SHA-256</th><th>Capabilities</th><th>YARA hits</th></tr></thead><tbody><tr><td>variant_a.exe</td><td><code>aaaaaaaaaaaa</code></td><td>memory-allocation, network-communication, powershell, process-execution</td><td>0</td></tr><tr><td>variant_b.exe</td><td><code>bbbbbbbbbbbb</code></td><td>memory-allocation, network-communication, powershell, process-execution</td><td>0</td></tr><tr><td>variant_c.exe</td><td><code>cccccccccccc</code></td><td>encoded-content, memory-allocation, network-communication, powershell, process-execution</td><td>0</td></tr></tbody></table></div>
+            </section>
+            
+<p class='footer'>Generated by SignalBreak. Analysis is static-only; no sample was executed or modified.</p>
+<script type='application/json' id='signalbreak-data'>[
+  {
+    &quot;path&quot;: &quot;variant_a.exe&quot;,
+    &quot;sha256&quot;: &quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;,
+    &quot;file_size&quot;: 182784,
+    &quot;file_type&quot;: &quot;PE&quot;,
+    &quot;overall_entropy&quot;: 6.91,
+    &quot;imports&quot;: [
+      &quot;KERNEL32.dll:CreateProcessW&quot;,
+      &quot;KERNEL32.dll:VirtualAlloc&quot;,
+      &quot;WINHTTP.dll:WinHttpOpen&quot;
+    ],
+    &quot;capabilities&quot;: [
+      &quot;memory-allocation&quot;,
+      &quot;network-communication&quot;,
+      &quot;powershell&quot;,
+      &quot;process-execution&quot;
+    ],
+    &quot;iocs&quot;: [
+      &quot;hxxps://beacon.example.test/update&quot;
+    ],
+    &quot;strings&quot;: [
+      &quot;Mozilla/5.0&quot;,
+      &quot;hxxps://beacon.example.test/update&quot;,
+      &quot;powershell.exe -EncodedCommand&quot;,
+      &quot;stage-one&quot;
+    ],
+    &quot;sections&quot;: [
+      {
+        &quot;name&quot;: &quot;.text&quot;,
+        &quot;virtual_size&quot;: 45056,
+        &quot;raw_size&quot;: 45568,
+        &quot;entropy&quot;: 6.1,
+        &quot;executable&quot;: true,
+        &quot;writable&quot;: false
+      },
+      {
+        &quot;name&quot;: &quot;.rdata&quot;,
+        &quot;virtual_size&quot;: 12288,
+        &quot;raw_size&quot;: 12800,
+        &quot;entropy&quot;: 5.2,
+        &quot;executable&quot;: false,
+        &quot;writable&quot;: false
+      }
+    ],
+    &quot;yara_rules&quot;: [],
+    &quot;yara_strings&quot;: [],
+    &quot;metadata&quot;: {}
+  },
+  {
+    &quot;path&quot;: &quot;variant_b.exe&quot;,
+    &quot;sha256&quot;: &quot;bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb&quot;,
+    &quot;file_size&quot;: 188416,
+    &quot;file_type&quot;: &quot;PE&quot;,
+    &quot;overall_entropy&quot;: 6.95,
+    &quot;imports&quot;: [
+      &quot;KERNEL32.dll:CreateProcessW&quot;,
+      &quot;KERNEL32.dll:VirtualAlloc&quot;,
+      &quot;WINHTTP.dll:WinHttpOpen&quot;
+    ],
+    &quot;capabilities&quot;: [
+      &quot;memory-allocation&quot;,
+      &quot;network-communication&quot;,
+      &quot;powershell&quot;,
+      &quot;process-execution&quot;
+    ],
+    &quot;iocs&quot;: [
+      &quot;hxxps://cdn.example.test/payload&quot;
+    ],
+    &quot;strings&quot;: [
+      &quot;User-Agent&quot;,
+      &quot;hxxps://cdn.example.test/payload&quot;,
+      &quot;powershell.exe -w hidden&quot;,
+      &quot;stage-two&quot;
+    ],
+    &quot;sections&quot;: [
+      {
+        &quot;name&quot;: &quot;.text&quot;,
+        &quot;virtual_size&quot;: 46080,
+        &quot;raw_size&quot;: 46592,
+        &quot;entropy&quot;: 6.2,
+        &quot;executable&quot;: true,
+        &quot;writable&quot;: false
+      },
+      {
+        &quot;name&quot;: &quot;.rdata&quot;,
+        &quot;virtual_size&quot;: 12288,
+        &quot;raw_size&quot;: 12800,
+        &quot;entropy&quot;: 5.1,
+        &quot;executable&quot;: false,
+        &quot;writable&quot;: false
+      }
+    ],
+    &quot;yara_rules&quot;: [],
+    &quot;yara_strings&quot;: [],
+    &quot;metadata&quot;: {}
+  },
+  {
+    &quot;path&quot;: &quot;variant_c.exe&quot;,
+    &quot;sha256&quot;: &quot;cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc&quot;,
+    &quot;file_size&quot;: 191488,
+    &quot;file_type&quot;: &quot;PE&quot;,
+    &quot;overall_entropy&quot;: 6.99,
+    &quot;imports&quot;: [
+      &quot;KERNEL32.dll:CreateProcessW&quot;,
+      &quot;KERNEL32.dll:VirtualAlloc&quot;,
+      &quot;WINHTTP.dll:WinHttpOpen&quot;
+    ],
+    &quot;capabilities&quot;: [
+      &quot;encoded-content&quot;,
+      &quot;memory-allocation&quot;,
+      &quot;network-communication&quot;,
+      &quot;powershell&quot;,
+      &quot;process-execution&quot;
+    ],
+    &quot;iocs&quot;: [
+      &quot;hxxps://sync.example.test/check&quot;
+    ],
+    &quot;strings&quot;: [
+      &quot;FromBase64String&quot;,
+      &quot;hxxps://sync.example.test/check&quot;,
+      &quot;sync-token&quot;,
+      &quot;v3&quot;
+    ],
+    &quot;sections&quot;: [
+      {
+        &quot;name&quot;: &quot;.text&quot;,
+        &quot;virtual_size&quot;: 47104,
+        &quot;raw_size&quot;: 47616,
+        &quot;entropy&quot;: 6.25,
+        &quot;executable&quot;: true,
+        &quot;writable&quot;: false
+      },
+      {
+        &quot;name&quot;: &quot;.rdata&quot;,
+        &quot;virtual_size&quot;: 12288,
+        &quot;raw_size&quot;: 12800,
+        &quot;entropy&quot;: 5.0,
+        &quot;executable&quot;: false,
+        &quot;writable&quot;: false
+      }
+    ],
+    &quot;yara_rules&quot;: [],
+    &quot;yara_strings&quot;: [],
+    &quot;metadata&quot;: {}
+  }
+]</script>
+</main></body></html>
