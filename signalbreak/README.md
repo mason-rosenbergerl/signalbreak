@@ -4,7 +4,7 @@
 
 **SignalBreak asks a different question from a normal malware scanner:**
 
-> **When a malware family changes, which detection signals survive—and which ones quietly age out?**
+> **When a malware family changes, which detection signals survive and which ones quietly age out?**
 
 Instead of treating suspicious files as isolated objects, SignalBreak builds **static lineage hypotheses** from a folder of samples. It measures evidence stability across related samples, highlights durable anchors, and exposes high-churn evidence that is likely to be brittle for detection engineering.
 
